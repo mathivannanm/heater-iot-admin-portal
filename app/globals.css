@@ -1,0 +1,138 @@
+@import "tailwindcss";
+
+/*
+ * Heater Ver1 admin dashboard — white and red.
+ *
+ * White grounds and surfaces, red as the brand and structural accent (active
+ * navigation, links, primary actions, focus). Red also means "alarm" here, so
+ * the alarm red is a deeper shade than the brand red, and the remaining
+ * states keep their own colours — green for healthy, amber for warning, orange
+ * for a running element. If every badge were red, none of them would read as
+ * a problem.
+ *
+ * The palette is deliberately light-only: `color-scheme: light` keeps form
+ * controls and scrollbars white even when the operating system is in dark
+ * mode, so the dashboard stays white everywhere.
+ */
+
+:root {
+  color-scheme: light;
+
+  --background: #fafafa;
+  --surface: #ffffff;
+  --surface-muted: #f6f6f7;
+  --surface-raised: #ffffff;
+  --border: #e7e7ea;
+  --border-strong: #cfcfd6;
+  --foreground: #17171a;
+  --muted: #71717a;
+  --muted-strong: #52525b;
+
+  /* Brand red — structure and interaction. */
+  --accent: #d32f2f;
+  --accent-soft: #fdecec;
+
+  /* Status. */
+  --ok: #15803d;
+  --ok-soft: #e6f6ea;
+  --warn: #b45309;
+  --warn-soft: #fdf2dc;
+  --danger: #b3181f;
+  --danger-soft: #fce9e9;
+  --idle: #71717a;
+  --idle-soft: #f2f2f4;
+  --heat: #e05a10;
+  --heat-soft: #fdeee0;
+
+  /* Transports stay distinguishable at a glance. */
+  --bt: #1d4ed8;
+  --bt-soft: #e8edfd;
+  --wifi: #0e7490;
+  --wifi-soft: #e0f4f8;
+
+  --shadow-card: 0 1px 2px rgb(23 23 26 / 0.05), 0 1px 3px rgb(23 23 26 / 0.04);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-muted: var(--surface-muted);
+  --color-surface-raised: var(--surface-raised);
+  --color-border-base: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-muted-strong: var(--muted-strong);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-ok: var(--ok);
+  --color-ok-soft: var(--ok-soft);
+  --color-warn: var(--warn);
+  --color-warn-soft: var(--warn-soft);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+  --color-idle: var(--idle);
+  --color-idle-soft: var(--idle-soft);
+  --color-heat: var(--heat);
+  --color-heat-soft: var(--heat-soft);
+  --color-bt: var(--bt);
+  --color-bt-soft: var(--bt-soft);
+  --color-wifi: var(--wifi);
+  --color-wifi-soft: var(--wifi-soft);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), system-ui, -apple-system, "Segoe UI", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Numeric columns line up when the digits do. */
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* A single shared pulse for "this value is live". */
+@keyframes heartbeat-pulse {
+  0% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.35; transform: scale(1.35); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+.pulse-dot {
+  animation: heartbeat-pulse 2s ease-in-out infinite;
+}
+
+@keyframes row-flash {
+  from { background-color: var(--accent-soft); }
+  to { background-color: transparent; }
+}
+
+.row-flash {
+  animation: row-flash 1.2s ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pulse-dot,
+  .row-flash {
+    animation: none;
+  }
+}
+
+::selection {
+  background: var(--accent-soft);
+}
+
+*:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Keep wide tables scrollable inside their card rather than stretching the page. */
+.scroll-x {
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
